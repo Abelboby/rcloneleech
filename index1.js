@@ -133,14 +133,14 @@ async function insertFilenameToDB(filename,collectionName) {
 let pendingPDFs = [];
 let originalFileName;
 let mergemedia;
-client.on('message', async message1 => {
-  const message = message1.body.toLowerCase();
+client.on('message', async message => {
+  const messagebody = message.body.toLowerCase();
   const senderPhoneNumber = message.from;
   const phoneNumberDigits = senderPhoneNumber.replace(/\D/g, '').slice(-10);
   const collectionName = phoneNumberDigits;
   console.log('Sender phone number:', phoneNumberDigits);
     // if (message.hasMedia ) {
-    if (message.body === 'print' && message.hasQuotedMsg) {
+    if (messagebody === 'print' && message.hasQuotedMsg) {
         const quotedMsg = await message.getQuotedMessage();
         if (quotedMsg.hasMedia) {
            const media = await quotedMsg.downloadMedia();
@@ -232,7 +232,7 @@ client.on('message', async message1 => {
         }
          
     } 
-    else if(message.body === 'merge') {
+    else if(messagebody === 'merge') {
         if (pendingPDFs.length < 2) {
             message.reply('Please send at least two PDFs before merging.');
         } else {
@@ -303,19 +303,19 @@ client.on('message', async message1 => {
     //         message.reply('The quoted message does not contain any media or is not a document.');
     //     }
     // } 
-        else if (message.body === 'ping') {
+        else if (messagebody === 'ping') {
         message.reply('pong');
         console.log('ping message recevied');
-    } else if (message.body === 'nadako') {
+    } else if (messagebody === 'nadako') {
         message.reply('avo');
         message.react('🚶');
-    } else if (message.body === '!anand') {
+    } else if (messagebody === '!anand') {
         message.reply('ni eatha!');
         // message.react('🖕');
-    } else if(message.body==='!erajhipo'){
+    } else if(messagebody==='!erajhipo'){
         // message.reply('ninte achan');
         message.reply('LocalAuth loggingout.');
-    } else if (message.body === '!epadida') {
+    } else if (messagebody === '!epadida') {
         message.reply('unnal mudiyath thambi!');
         message.react('😙');
     }
